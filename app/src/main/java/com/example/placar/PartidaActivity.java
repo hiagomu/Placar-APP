@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -27,6 +28,9 @@ public class PartidaActivity extends AppCompatActivity {
     private TextView passe2;
     private Button bPasse1;
     private Button bPasse2;
+
+
+
 
 
     @Override
@@ -57,5 +61,24 @@ public class PartidaActivity extends AppCompatActivity {
         Intent intent = getIntent();
         time1.setText(intent.getStringExtra("Time1"));
         time2.setText((intent.getStringExtra("Time2")));
+        int tempo = (intent.getIntExtra("Tempo", 0))*1000;
+
+        new CountDownTimer(tempo, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                crono.setText(""+(int) (millisUntilFinished/1000));
+            }
+
+            @Override
+            public void onFinish() {
+                crono.setText("FIM!");
+            }
+        }.start();
     }
+
+
+
+
+
+
 }
