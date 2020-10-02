@@ -36,6 +36,17 @@ public class PartidaActivity extends AppCompatActivity {
         buttons();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        gol1.setText("0");
+        gol2.setText("0");
+        falta1.setText("0");
+        falta2.setText("0");
+        passe1.setText("0");
+        passe2.setText("0");
+    }
+
     // Carregar campos
     private void carregaCampos() {
         crono = findViewById(R.id.cronoTextView);
@@ -133,11 +144,13 @@ public class PartidaActivity extends AppCompatActivity {
         if(nGols == Integer.parseInt(gol1.getText().toString())) {
             resultado = "Vitória do " + time1.getText().toString();
             cronometro.cancel();
+            intent.putExtra("Resultado", resultado);
             informJogo(intent);
             startActivity(intent);
         } else if(nGols == Integer.parseInt(gol2.getText().toString())){
             resultado = "Vitória do " + time2.getText().toString();
             cronometro.cancel();
+            intent.putExtra("Resultado", resultado);
             informJogo(intent);
             startActivity(intent);
         }
@@ -145,10 +158,12 @@ public class PartidaActivity extends AppCompatActivity {
 
     // Método de envio de informações para a próxima activity
     private void informJogo(Intent intent) {
+        intent.putExtra("Time1", time1.getText().toString());
+        intent.putExtra("Time2", time2.getText().toString());
         intent.putExtra("Placar1", gol1.getText().toString());
         intent.putExtra("Placar2", gol2.getText().toString());
         intent.putExtra("Faltas1", falta1.getText().toString());
-        intent.putExtra("Placar2", falta2.getText().toString());
+        intent.putExtra("Faltas2", falta2.getText().toString());
         intent.putExtra("Passes1", passe1.getText().toString());
         intent.putExtra("Passes2", passe2.getText().toString());
     }
