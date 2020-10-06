@@ -20,6 +20,7 @@ public class ResultadoActivity extends AppCompatActivity {
     private TextView passes2;
     private TextView resultado;
     private Button reiniciar;
+    private Button iniciar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,7 @@ public class ResultadoActivity extends AppCompatActivity {
         carregaCampos();
         mostrarResultado();
         reiniciarJogo();
+        iniciarJogo();
     }
 
     private void carregaCampos() {
@@ -38,9 +40,10 @@ public class ResultadoActivity extends AppCompatActivity {
         faltas1 = findViewById(R.id.faltaResultado1TextView);
         faltas2 = findViewById(R.id.faltaResultado2TextView);
         passes1 = findViewById(R.id.passeResultado1TextView);
-        passes2 = findViewById(R.id.faltaResultado2TextView);
+        passes2 = findViewById(R.id.passeResultado2TextView);
         resultado = findViewById(R.id.mensagemResultadoTextView);
         reiniciar = findViewById(R.id.reiniciarResultadoButton);
+        iniciar = findViewById(R.id.iniciarResultadoButton);
     }
 
     private void mostrarResultado() {
@@ -61,6 +64,16 @@ public class ResultadoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+    }
+
+    private void iniciarJogo() {
+        iniciar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ResultadoActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
     }

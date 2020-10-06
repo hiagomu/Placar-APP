@@ -25,6 +25,8 @@ public class PartidaActivity extends AppCompatActivity {
     private Button bPasse1;
     private Button bPasse2;
     private int i;
+    private int nGols;
+    private int tempo;
     private CountDownTimer cronometro;
 
     @Override
@@ -32,7 +34,9 @@ public class PartidaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_partida);
         carregaCampos();
-        setContent();
+        setTimes();
+        getGols();
+        tempoTotal();
         buttons();
     }
 
@@ -45,6 +49,7 @@ public class PartidaActivity extends AppCompatActivity {
         falta2.setText("0");
         passe1.setText("0");
         passe2.setText("0");
+        timerMethod(tempo);
     }
 
     // Carregar campos
@@ -66,58 +71,42 @@ public class PartidaActivity extends AppCompatActivity {
         bFalta2 = findViewById(R.id.falta2Button);
     }
 
-    // Setar cronomêtro e nome dos times
-    private void setContent() {
+    // Set Times
+    private void setTimes() {
         Intent intent = getIntent();
         time1.setText(intent.getStringExtra("Time1"));
         time2.setText((intent.getStringExtra("Time2")));
-        int tempo = (intent.getIntExtra("Tempo", 0)*1000);
-        int nGols = (intent.getIntExtra("Gols", 0));
-        System.out.println(nGols);
+    }
 
-        timerMethod(tempo, nGols);
+    // Get Gols
+    private void getGols() {
+        Intent intent = getIntent();
+        nGols = (intent.getIntExtra("Gols", 0));
+    }
+
+    // Set Tempo
+    public void tempoTotal() {
+        Intent intent = getIntent();
+        tempo = (intent.getIntExtra("Tempo", 0)*1000);
     }
 
     // Método do cronomêtro
-    private void timerMethod(int tempo, final int nGols) {
+    private void timerMethod(int tempo) {
         cronometro = new CountDownTimer(tempo, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 crono.setText(""+(int) (millisUntilFinished/1000));
-                fimGols(nGols);
             }
             @Override
             public void onFinish() {
                 crono.setText("FIM!");
-                fimTempo();
+                fimJogo();
             }
         }.start();
     }
 
-    // Método de incremento para gols, faltas e passes
-    private void incrementButtons(Button botao, final TextView textBotao) {
-        botao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                i = Integer.parseInt(textBotao.getText().toString());
-                int n = i + 1;
-                textBotao.setText("" + n);
-            }
-        });
-    }
-
-    // Introdução dos buttons ao método de incremento
-    private void buttons() {
-        incrementButtons(bGol1, gol1);
-        incrementButtons(bGol2, gol2);
-        incrementButtons(bFalta1, falta1);
-        incrementButtons(bFalta2, falta2);
-        incrementButtons(bPasse1, passe1);
-        incrementButtons(bPasse2, passe2);
-    }
-
-    // Método de finalização por tempo
-    private void fimTempo() {
+    // Método de finalização
+    private void fimJogo() {
         Intent intent = new Intent(PartidaActivity.this, ResultadoActivity.class);
         String resultado;
 
@@ -132,28 +121,46 @@ public class PartidaActivity extends AppCompatActivity {
             intent.putExtra("Resultado", resultado);
         }
 
+        cronometro.cancel();
         informJogo(intent);
         startActivity(intent);
     }
 
-    // Método de finalização por gols
-    private void fimGols(int nGols) {
-        Intent intent = new Intent(PartidaActivity.this, ResultadoActivity.class);
-        String resultado;
+    // Método de incremento para faltas e passes
+    private void incrementButtons(Button botao, final TextView textBotao) {
+        botao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                i = Integer.parseInt(textBotao.getText().toString());
+                int n = i + 1;
+                textBotao.setText("" + n);
+            }
+        });
+    }
 
-        if(nGols == Integer.parseInt(gol1.getText().toString())) {
-            resultado = "Vitória do " + time1.getText().toString();
-            cronometro.cancel();
-            intent.putExtra("Resultado", resultado);
-            informJogo(intent);
-            startActivity(intent);
-        } else if(nGols == Integer.parseInt(gol2.getText().toString())){
-            resultado = "Vitória do " + time2.getText().toString();
-            cronometro.cancel();
-            intent.putExtra("Resultado", resultado);
-            informJogo(intent);
-            startActivity(intent);
-        }
+    // Método de incremento para gols
+    private void incrementButtonsGols(Button botao, final TextView textBotao) {
+        botao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                i = Integer.parseInt(textBotao.getText().toString());
+                int n = i + 1;
+                textBotao.setText("" + n);
+                if (n == nGols) {
+                    fimJogo();
+                }
+            }
+        });
+    }
+
+    // Introdução dos buttons ao método de incremento
+    private void buttons() {
+        incrementButtonsGols(bGol1, gol1);
+        incrementButtonsGols(bGol2, gol2);
+        incrementButtons(bFalta1, falta1);
+        incrementButtons(bFalta2, falta2);
+        incrementButtons(bPasse1, passe1);
+        incrementButtons(bPasse2, passe2);
     }
 
     // Método de envio de informações para a próxima activity
@@ -167,4 +174,5 @@ public class PartidaActivity extends AppCompatActivity {
         intent.putExtra("Passes1", passe1.getText().toString());
         intent.putExtra("Passes2", passe2.getText().toString());
     }
+
 }

@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText ngols;
     private Button iniciar;
     private Switch onOffSwitch;
+    private int numGols;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +89,11 @@ public class MainActivity extends AppCompatActivity {
                 String nomeTime1 = time1.getText().toString();
                 String nomeTime2 = time2.getText().toString();
                 // Se o switch estiver acionado enviar numGols
-                int numGols = Integer.parseInt(ngols.getText().toString());
+                if (onOffSwitch.isChecked()) {
+                    numGols = Integer.parseInt(ngols.getText().toString());
+                } else {
+                    numGols = 100000;
+                }
 
                 enviarValores(nTempo, nomeTime1, nomeTime2, numGols);
             }
