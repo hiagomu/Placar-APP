@@ -21,13 +21,13 @@
 
     <ImageView
         android:id="@+id/imageView6"
-        android:layout_width="369dp"
-        android:layout_height="380dp"
+        android:layout_width="493dp"
+        android:layout_height="289dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25"
+        app:layout_constraintVertical_bias="0.483"
         app:srcCompat="@drawable/fundo_transparente" />
 
     <TextView
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="4dp"
         android:text="Duração"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="@+id/imageView6"
@@ -48,7 +48,7 @@
         style="@style/editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:text="Partida"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -128,38 +128,39 @@
         android:id="@+id/golsSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintStart_toStartOf="@+id/imageView6"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView5"
+        app:layout_constraintStart_toEndOf="@+id/textView5"
+        app:layout_constraintTop_toTopOf="@+id/textView5"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/iniciarButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="144dp"
-        android:layout_marginLeft="144dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
         android:text="Iniciar"
-        app:layout_constraintStart_toStartOf="@+id/imageView6"
-        app:layout_constraintTop_toBottomOf="@+id/ngolsEditText" />
+        app:layout_constraintStart_toEndOf="@+id/ngolsEditText"
+        app:layout_constraintTop_toTopOf="@+id/ngolsEditText" />
 
     <EditText
         android:id="@+id/ngolsEditText"
         style="@style/editText"
         android:layout_width="110dp"
         android:layout_height="43dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
         android:ems="10"
         android:enabled="true"
         android:hint="Nº Gols"
         android:inputType="number"
         android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/golsSwitch"
         app:layout_constraintStart_toEndOf="@+id/golsSwitch"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toTopOf="@+id/golsSwitch"
+        app:layout_constraintVertical_bias="0.562" />
 
     <EditText
         android:id="@+id/tempoEditText"
